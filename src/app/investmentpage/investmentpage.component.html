@@ -1,0 +1,36 @@
+<div>
+  <nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-text">
+    Witaj, <b>{{investmentsInfo.identification}}</b>. Twój stan konta, to: <b>{{investmentsInfo.amount}} PLN</b>
+  </span>
+  </nav>
+</div>
+<div><button class="btn btn-primary mb-2" (click)="openModal(ngModalNewInvestment)">Dodaj</button></div>
+
+<h1>Lokaty</h1>
+<table class="table table-striped" align="center">
+  <thead>
+  <tr>
+    <th>Data Otwarcia</th>
+    <th>Data zamknięcia</th>
+    <th>Wartość</th>
+    <th>Nazwa</th>
+    <th>Typ</th>
+    <th>Operacja</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let investment of investments">
+    <td>{{investment.openDate}}</td>
+    <td>{{investment.endDate}}</td>
+    <td>{{investment.currentAmount}}</td>
+    <td>{{investment.name}}</td>
+    <td>{{investment.type}}</td>
+    <td>
+      <button type="submit" class="btn btn-primary mb-2" >Wpłać na lokatę</button>
+      <button type="submit" class="btn btn-danger mb-2" (click)="onShutDownClicked(investment.idInvestmentNumber)">Zamknij lokatę</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
