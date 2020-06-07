@@ -5,32 +5,116 @@
   </span>
   </nav>
 </div>
-<div><button class="btn btn-primary mb-2" (click)="openModal(ngModalNewInvestment)">Dodaj</button></div>
 
-<h1>Lokaty</h1>
-<table class="table table-striped" align="center">
-  <thead>
-  <tr>
-    <th>Data Otwarcia</th>
-    <th>Data zamknięcia</th>
-    <th>Wartość</th>
-    <th>Nazwa</th>
-    <th>Typ</th>
-    <th>Operacja</th>
-  </tr>
-  </thead>
+<div class="container-fluid">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 py-md-3 bd-sidebar"></div>
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
+      <h1 class="bd-title text-center" id="content">Lokaty</h1>
+      <table class="table table-striped" align="center">
+        <thead>
+        <tr>
+          <th>Data Otwarcia</th>
+          <th>Data zamknięcia</th>
+          <th>Wartość</th>
+          <th>Nazwa</th>
+          <th>Typ kapitalizacji</th>
+          <th>Operacja</th>
+        </tr>
+        </thead>
 
-  <tbody>
-  <tr *ngFor="let investment of investments">
-    <td>{{investment.openDate}}</td>
-    <td>{{investment.endDate}}</td>
-    <td>{{investment.currentAmount}}</td>
-    <td>{{investment.name}}</td>
-    <td>{{investment.type}}</td>
-    <td>
-      <button type="submit" class="btn btn-primary mb-2" >Wpłać na lokatę</button>
-      <button type="submit" class="btn btn-danger mb-2" (click)="onShutDownClicked(investment.idInvestmentNumber)">Zamknij lokatę</button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+        <tbody>
+        <tr *ngFor="let investment of investments">
+          <td>{{investment.openDate}}</td>
+          <td>{{investment.endDate}}</td>
+          <td>{{investment.currentAmount}}</td>
+          <td>{{investment.name}}</td>
+          <td>{{investment.type}}</td>
+          <td>
+            <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#depositPayment" (click)="rememberId(investment.idInvestmentNumber)">Wpłać
+              na lokatę
+            </button>
+            <button type="submit" class="btn btn-danger mb-2"
+                    (click)="onShutDownClicked(investment.idInvestmentNumber)">Zamknij lokatę
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </main>
+    <div class="d-none d-xl-block col-xl-2 py-md-3 bd-toc ">
+      <div>
+        <button class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#addNewModal">Dodaj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Add-->
+<div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="Utwórz lokatę" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modaltitleaddnew">Utwórz lokatę</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="newInvestmentForm" class="form-signin">
+          <div class="form-group">
+            <label for="amountInput">Wartość lokaty:</label>
+            <input type="number" class="form-control" id="amountInput" placeholder="Wartość">
+          </div>
+          <div class="form-group">
+            <label for="idInvestmentType">Typ lokaty</label>
+            <select class="form-control" id="idInvestmentType">
+              <option *ngFor="let type of types">{{type}}</option>
+              <!--tutaj ngfor z wartościami pobranymi z api?-->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="idCapitalization">Wybierz typ kapitalizacji:</label>
+            <select class="form-control" id="idCapitalization">
+              <option *ngFor="let capitalization of capitalizations">
+                {{capitalization}}
+              </option>
+
+            </select>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+        <button type="button" class="btn btn-primary">Utwórz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Deposit-->
+<div class="modal fade" id="depositPayment" tabindex="-1" role="dialog" aria-labelledby="Deposit" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modaltitledeposit">Wpłać na lokatę</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="depositForm" class="form-group">
+        <label for="value" class="sr-only">Podaj kwotę wpłaty:</label>
+        <input formControlName="value" type="number" class="form-control" id="value"
+        placeholder="Wartość">
+          <!--<button type="submit" class="btn btn-primary" [disabled]="depositForm.invalid">Wpłać</button>-->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+        <button type="submit" class="btn btn-primary" [disabled]="depositForm.invalid" (click)="submitdeposit()">Wpłać</button>
+      </div>
+    </div>
+  </div>
+</div>
