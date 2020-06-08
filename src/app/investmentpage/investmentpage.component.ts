@@ -66,38 +66,64 @@ export class InvestmentpageComponent implements OnInit {
     });
     window.location.reload();
   }
+
   addNew() {
     const capitalizationType = [
-      {id: '1', value: 'roczna'},
-      {id: '2', value: 'półroczna'},
-      {id: '3', value: 'kwartalna'},
-      {id: '4', value: 'miesięczna'},
-      {id: '5', value: 'tygodniowa'},
-      {id: '6', value: 'dobowa'},
-      {id: '7', value: 'godzinna'}
+      {id: 1, value: 'roczna'},
+      {id: 2, value: 'półroczna'},
+      {id: 3, value: 'kwartalna'},
+      {id: 4, value: 'miesięczna'},
+      {id: 5, value: 'tygodniowa'},
+      {id: 6, value: 'dobowa'},
+      {id: 7, value: 'godzinna'}
     ];
     const length = [
-      {id: '365', value: 'roczna'},
-      {id: '182', value: 'półroczna'},
-      {id: '90', value: 'kwartalna'},
-      {id: '30', value: 'miesięczna'},
-      {id: '7', value: 'tygodniowa'},
-      {id: '1', value: 'dobowa'},
-      {id: '1', value: 'godzinna'}
+      {id: 365, value: 'roczna'},
+      {id: 182, value: 'półroczna'},
+      {id: 90, value: 'kwartalna'},
+      {id: 30, value: 'miesięczna'},
+      {id: 7, value: 'tygodniowa'},
+      {id: 1, value: 'dobowa'},
+      {id: 1, value: 'godzinna'}
     ];
     const investment_type = [
-      {id: '1', value: 'Lokata terminowa - stały wzrost'},
-      {id: '2', value: 'Lokata progresywna'},
-      {id: '3', value: 'Lokata nocna'},
-      {id: '4', value: 'Lokata dynamiczna'},
-      {id: '5', value: 'Lokata jednodniowa'}
+      {id: 1, value: 'Lokata terminowa - stały wzrost'},
+      {id: 2, value: 'Lokata progresywna'},
+      {id: 3, value: 'Lokata nocna'},
+      {id: 4, value: 'Lokata dynamiczna'},
+      {id: 5, value: 'Lokata jednodniowa'}
     ];
+    // const capitalizationType = [
+    //   {id: '1', value: 'roczna'},
+    //   {id: '2', value: 'półroczna'},
+    //   {id: '3', value: 'kwartalna'},
+    //   {id: '4', value: 'miesięczna'},
+    //   {id: '5', value: 'tygodniowa'},
+    //   {id: '6', value: 'dobowa'},
+    //   {id: '7', value: 'godzinna'}
+    // ];
+    // const length = [
+    //   {id: '365', value: 'roczna'},
+    //   {id: '182', value: 'półroczna'},
+    //   {id: '90', value: 'kwartalna'},
+    //   {id: '30', value: 'miesięczna'},
+    //   {id: '7', value: 'tygodniowa'},
+    //   {id: '1', value: 'dobowa'},
+    //   {id: '1', value: 'godzinna'}
+    // ];
+    // const investment_type = [
+    //   {id: '1', value: 'Lokata terminowa - stały wzrost'},
+    //   {id: '2', value: 'Lokata progresywna'},
+    //   {id: '3', value: 'Lokata nocna'},
+    //   {id: '4', value: 'Lokata dynamiczna'},
+    //   {id: '5', value: 'Lokata jednodniowa'}
+    // ];
     const amount = this.newInvestmentForm.get('value_new').value;
     const investment_dao = investment_type.find(x => x.value === this.investmentType);
     const length_dao = length.find(x => x.value === this.investmentLength);
     const cap_dao = capitalizationType.find(x => x.value === this.capitalizationType);
 
-    const dao = new Createdao(amount, cap_dao.id, investment_dao.id, length_dao.id, this.accountNumber);
+    const dao = new Createdao(amount, cap_dao.id , investment_dao.id, length_dao.id, this.accountNumber);
 
     console.log(dao);
     this.service.addNew(dao).subscribe(item => {
@@ -105,7 +131,6 @@ export class InvestmentpageComponent implements OnInit {
     });
     window.location.reload();
   }
-
 
 
   rememberId(id: number): void {
@@ -129,6 +154,7 @@ export class InvestmentpageComponent implements OnInit {
       ]],
     });
   }
+
   onChangeType(val) {
     console.log(val);
     this.investmentType = val;
