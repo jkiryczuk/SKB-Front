@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Investment} from '../model/investment';
 import {Depositdao} from '../model/depositdao';
+import {Createdao} from '../model/createdao';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class InvestmentService {
 
   deposit(depositdao: Depositdao): Observable<void> {
     return this.http.post<any>(this.api + 'deposit', depositdao);
+  }
+
+  addNew(createdao: Createdao): Observable<void> {
+    return this.http.post<any>(this.api + 'addnew', createdao);
   }
 
 }
